@@ -94,23 +94,18 @@ npm install
 npm run dev
 ```
 
-Future Improvements
+Future Improvements<br>
+ - Form validation<br>  
+ - Progress indicator<br>
+ - Better UI/UX<br>  
+ - Error handling & success messages<br>  
+ - Admin panel to view submitted data<br>
 
-Form validation
+**👨‍💻 Author**<br>
 
-Progress indicator
-
-Better UI/UX
-
-Error handling & success messages
-
-Admin panel to view submitted data
-
-👨‍💻 Author
-
-Subhajeet Dey
-GitHub: https://github.com/subhajeetdey-dev
-LinkedIn: https://www.linkedin.com/in/subhajeetdey-dev
+Subhajeet Dey<br>
+GitHub: https://github.com/subhajeetdey-dev<br>
+LinkedIn: https://www.linkedin.com/in/subhajeetdey-dev<br>
 
 ⭐ Support
 
