@@ -105,7 +105,11 @@ const MultiForm = () => {
       onSubmit={handleSubmit}
       className="min-h-screen flex justify-center items-center"
     >
-      <div className="border p-6 w-60%">
+      <div className="bg-white w-full max-w-4xl rounded-xl shadow-lg p-8">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold">Create New Account</h1>
+        </div>
+        <div className="border p-6 w-60%">
         {step === 1 && (
           <PersonalFormDetails
             formData={formData}
@@ -153,6 +157,8 @@ const MultiForm = () => {
           )}
         </div>
       </div>
+      </div>
+      
     </form>
   );
 };
