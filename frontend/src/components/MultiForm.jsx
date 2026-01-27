@@ -198,6 +198,8 @@ const MultiForm = () => {
           </div>
         </div>
       </div>
+      </div>
+      
     </form>
   );
 };
