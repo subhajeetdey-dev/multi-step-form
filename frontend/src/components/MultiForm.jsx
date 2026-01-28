@@ -22,7 +22,6 @@ const MultiForm = () => {
   });
 
   const validStep = () => {
-
     if (currentStep === 1) {
       if (
         !formData.firstName ||
@@ -36,21 +35,27 @@ const MultiForm = () => {
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      alert("Please enter a valid email id!");
-      return false;
-    }
+      if (!emailRegex.test(formData.email)) {
+        alert("Please enter a valid email id!");
+        return false;
+      }
 
-    const phoneRegex = /^[0-9]{10}$/;
-    if (!phoneRegex.test(formData.phone)) {
-      alert("Please enter a valid phone number!");
-      return false;
+      const phoneRegex = /^[0-9]{10}$/;
+      if (!phoneRegex.test(formData.phone)) {
+        alert("Please enter a valid phone number!");
+        return false;
+      }
     }
-    }    
 
     if (currentStep === 2) {
       if (!formData.college || !formData.degree || !formData.year) {
         alert("Please fill all the required fields");
+        return false;
+      }
+
+      const yearRegex = /^(19|20)\d{2}$/;
+      if (!yearRegex.test(formData.year)) {
+        alert("Please enter a year!");
         return false;
       }
     }
@@ -95,17 +100,31 @@ const MultiForm = () => {
     { number: 2, title: "Educational Details" },
     { number: 3, title: "Skills Details" },
   ];
-  
+
   const nextStep = () => {
-    if (!validStep()) {
-      return false;
+    if (validStep()) {
+      if (currentStep < 3){
+        setCurrentStep(currentStep + 1);
+      } 
     }
-    if (currentStep < 3) setCurrentStep(currentStep + 1);    
   };
 
   const prevStep = () => {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
+
+  const goToStep = (stepNumber) => {
+    if(stepNumber < currentStep){
+      setCurrentStep(stepNumber);
+      return;
+    }
+
+    if(stepNumber > currentStep){
+      if(validStep()){
+        setCurrentStep(stepNumber);
+      }
+    }
+  }
 
   return (
     <form
@@ -117,21 +136,30 @@ const MultiForm = () => {
           Create New Account
         </h1>
         <div className="flex bg-gradient-to-r from-blue-50 to-purple-50">
-          {steps.map((step,index) => (
-              <button key={step.number} onClick={()=> setCurrentStep(step.number)} className={`flex-1 flex items-center justify-center gap-3 py-6 px-4 transition-all duration-300 ${
+          {steps.map((step, index) => (
+            <button
+              key={step.number}
+              type="button"
+              onClick={() => goToStep(step.number)}
+              className={`flex-1 flex items-center justify-center gap-3 py-6 px-4 transition-all duration-300 ${
                 currentStep === step.number
-                  ? 'bg-gradient-to-r from-blue-400 to-purple-400 text-white shadow-lg'
-                  : 'text-gray-400 hover:bg-white/50'
-              } ${index === 0 ? 'rounded-tr-3xl' : ''} ${
-                index === steps.length - 1 ? 'rounded-tl-3xl' : ''
-              }`}>
-                <span className={`flex items-center justify-center w-8 h-8 rounded-full font-semibold ${
+                  ? "bg-gradient-to-r from-blue-400 to-purple-400 text-white shadow-lg"
+                  : "text-gray-400 hover:bg-white/50"
+              } ${index === 0 ? "rounded-tr-3xl" : ""} ${
+                index === steps.length - 1 ? "rounded-tl-3xl" : ""
+              }`}
+            >
+              <span
+                className={`flex items-center justify-center w-8 h-8 rounded-full font-semibold ${
                   currentStep === step.number
-                    ? 'bg-white text-blue-500'
-                    : 'bg-gray-200 text-gray-500'
-                }`}>{step.number}</span>
-                <span className="font-medium hidden sm:inline">{step.title}</span>
-              </button>
+                    ? "bg-white text-blue-500"
+                    : "bg-gray-200 text-gray-500"
+                }`}
+              >
+                {step.number}
+              </span>
+              <span className="font-medium hidden sm:inline">{step.title}</span>
+            </button>
           ))}
         </div>
 
@@ -190,7 +218,7 @@ const MultiForm = () => {
             ) : (
               <button
                 type="submit"
-                className="px-4 py-2 bg-green-600 text-white rounded-lg"
+                className="flex items-center px-6 py-2.5 bg-green-400 hover:bg-green-600 font-semibold text-white rounded-lg cursor-pointer"
               >
                 Submit
               </button>
