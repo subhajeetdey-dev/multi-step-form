@@ -17,7 +17,7 @@ const MultiForm = () => {
     college: "",
     degree: "",
     year: "",
-    skills: [],
+    skills: "",
     experience: "",
   });
 
@@ -56,13 +56,6 @@ const MultiForm = () => {
       const yearRegex = /^(19|20)\d{2}$/;
       if (!yearRegex.test(formData.year)) {
         alert("Please enter a year!");
-        return false;
-      }
-    }
-
-    if (currentStep === 3) {
-      if(formData.skills.length === 0){
-        alert("Please add at least one skill");
         return false;
       }
     }

@@ -25,7 +25,7 @@ const formSchema = new mongoose.Schema(
       match: /^[0-9]{10}$/,
     },
     dob: {
-      type: Date,
+      type: String,
       required: true,
     },
     college: {
@@ -41,14 +41,7 @@ const formSchema = new mongoose.Schema(
       required: true,
       match: /^[0-9]{4}$/,
     },
-    skills: {
-      type: [String],
-      required: true,
-      validate: {
-        validator: (v) => v.length > 0,
-        message: "At least one skill is required",
-      },
-    },
+    skills: String,
     experience: String,
   },
   {
