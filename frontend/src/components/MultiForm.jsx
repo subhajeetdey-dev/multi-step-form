@@ -17,7 +17,7 @@ const MultiForm = () => {
     college: "",
     degree: "",
     year: "",
-    skills: "",
+    skills: [],
     experience: "",
   });
 

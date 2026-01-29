@@ -9,7 +9,7 @@ export default function SkillsFormDetails({ formData, handleChange }) {
     const skill = skillInput.trim();
     if (!skill) return false;
 
-    if (formData.skills.includes(skill)) {
+    if (formData.skills.some((s) => s.toLowerCase() === skill.toLowerCase())) {
       alert("Skill already added");
       return;
     }
