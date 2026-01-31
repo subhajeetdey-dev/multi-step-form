@@ -36,10 +36,13 @@ const formSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    year: {
-      type: String,
+    dateOfJoining: {
+      type: Date,
       required: true,
-      match: /^[0-9]{4}$/,
+    },
+    dateOfComplition: {
+      type: Date,
+      required: true,
     },
     skills: {
       type: [String],

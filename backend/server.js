@@ -24,11 +24,6 @@ app.get("/",(req, res)=> {
   res.send("Server is running");
 });
 
-app.get("/api/test", (req, res) => {
-  res.json({ ok: true });
-});
-
-
 
 app.post("/api/submit-form", async(req, res)=> {
     try {
