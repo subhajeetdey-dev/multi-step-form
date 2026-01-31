@@ -3,6 +3,7 @@ import { useState } from "react";
 import EducationFormDetails from "./EducationFormDetails";
 import PersonalFormDetails from "./PersonalFormDetails";
 import SkillsFormDetails from "./SkillsFormDetails";
+import FinalFormReview from "./FinalFormReview";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const MultiForm = () => {
@@ -16,7 +17,8 @@ const MultiForm = () => {
     dob: "",
     college: "",
     degree: "",
-    year: "",
+    dateOfJoining: "",
+    dateOfComplition: "",
     skills: [],
     experience: "",
   });
@@ -48,14 +50,25 @@ const MultiForm = () => {
     }
 
     if (currentStep === 2) {
-      if (!formData.college || !formData.degree || !formData.year) {
+      if (
+        !formData.college ||
+        !formData.degree ||
+        !formData.dateOfJoining ||
+        !formData.dateOfComplition
+      ) {
         alert("Please fill all the required fields");
         return false;
       }
+      
+      if (formData.dateOfJoining >= formData.dateOfComplition) {
+        alert("Date of Completion must be after Date of Joining!");
+        return false;
+      }
+    }
 
-      const yearRegex = /^(19|20)\d{2}$/;
-      if (!yearRegex.test(formData.year)) {
-        alert("Please enter a year!");
+    if (currentStep === 3) {
+      if (formData.skills.length === 0) {
+        alert("Please add at least one skill");
         return false;
       }
     }
@@ -66,12 +79,24 @@ const MultiForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validStep()) return false;
+    
+    console.log("Form submitted!");
+
+    if (currentStep !== 4) {
+      return;
+    }
+
+    if (!validStep()) return;
+    
     alert("FormData Submitted Successfully!");
     console.log(formData);
 
+    submitToAPI();
+  };
+
+  const submitToAPI = async () => {
     try {
       const API = import.meta.env.VITE_API_URL;
       const res = await fetch(`${API}/api/submit-form`, {
@@ -99,38 +124,40 @@ const MultiForm = () => {
     { number: 1, title: "Personal Details" },
     { number: 2, title: "Educational Details" },
     { number: 3, title: "Skills Details" },
+    { number: 4, title: "Review & Submit" },
   ];
 
-  const nextStep = () => {
+  const nextStep = (e) => {
+    if (e) e.preventDefault();
+    
     if (validStep()) {
-      if (currentStep < 3){
-        setCurrentStep(currentStep + 1);
-      } 
+      if (currentStep < steps.length) {
+        setCurrentStep((prev) => prev + 1);
+      }
     }
   };
 
-  const prevStep = () => {
+  const prevStep = (e) => {
+    if (e) e.preventDefault();
+    
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
   const goToStep = (stepNumber) => {
-    if(stepNumber < currentStep){
+    if (stepNumber < currentStep) {
       setCurrentStep(stepNumber);
       return;
     }
 
-    if(stepNumber > currentStep){
-      if(validStep()){
+    if (stepNumber > currentStep) {
+      if (validStep()) {
         setCurrentStep(stepNumber);
       }
     }
-  }
+  };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="min-h-screen flex justify-center items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
-    >
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold mb-10 text-white">
           Create New Account
@@ -163,7 +190,7 @@ const MultiForm = () => {
           ))}
         </div>
 
-        <div className="bg-white w-5xl shadow-lg p-8">
+        <form onSubmit={handleSubmit} className="bg-white w-5xl shadow-lg p-8">
           <div className="border border-none p-6 w-full h-96 overflow-y-auto">
             {currentStep === 1 && (
               <PersonalFormDetails
@@ -183,6 +210,7 @@ const MultiForm = () => {
                 handleChange={handleChange}
               />
             )}
+            {currentStep === 4 && <FinalFormReview formData={formData} />}
           </div>
           <div className="flex items-center justify-between mt-5">
             {currentStep === 1 && (
@@ -206,7 +234,7 @@ const MultiForm = () => {
                 Back
               </button>
             )}
-            {currentStep < 3 ? (
+            {currentStep < 4 ? (
               <button
                 type="button"
                 onClick={nextStep}
@@ -224,9 +252,9 @@ const MultiForm = () => {
               </button>
             )}
           </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
   );
 };
 

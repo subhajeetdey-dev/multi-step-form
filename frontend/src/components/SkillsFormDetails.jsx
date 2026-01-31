@@ -5,9 +5,13 @@ import { Plus, X } from "lucide-react";
 export default function SkillsFormDetails({ formData, handleChange }) {
   const [skillInput, setSkillInput] = useState("");
 
-  const addSkills = () => {
+  const addSkills = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+
     const skill = skillInput.trim();
-    if (!skill) return false;
+    if (!skill) return;
 
     if (formData.skills.some((s) => s.toLowerCase() === skill.toLowerCase())) {
       alert("Skill already added");
@@ -58,7 +62,10 @@ export default function SkillsFormDetails({ formData, handleChange }) {
             />
             <button
               type="button"
-              onClick={addSkills}
+              onClick={(e) => {
+                e.preventDefault();
+                addSkills(e);
+              }}
               className="px-4 py-2 bg-blue-500 text-white rounded"
             >
               <Plus strokeWidth={3} />
@@ -96,7 +103,6 @@ export default function SkillsFormDetails({ formData, handleChange }) {
           name="experience"
           value={formData.experience}
           onChange={handleChange}
-          required
           className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none transition-all"
           placeholder="Enter your experience"
         />
