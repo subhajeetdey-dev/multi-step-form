@@ -59,7 +59,7 @@ const MultiForm = () => {
         alert("Please fill all the required fields");
         return false;
       }
-      
+
       if (formData.dateOfJoining >= formData.dateOfComplition) {
         alert("Date of Completion must be after Date of Joining!");
         return false;
@@ -81,7 +81,7 @@ const MultiForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     console.log("Form submitted!");
 
     if (currentStep !== 4) {
@@ -89,7 +89,7 @@ const MultiForm = () => {
     }
 
     if (!validStep()) return;
-    
+
     alert("FormData Submitted Successfully!");
     console.log(formData);
 
@@ -129,7 +129,7 @@ const MultiForm = () => {
 
   const nextStep = (e) => {
     if (e) e.preventDefault();
-    
+
     if (validStep()) {
       if (currentStep < steps.length) {
         setCurrentStep((prev) => prev + 1);
@@ -139,7 +139,7 @@ const MultiForm = () => {
 
   const prevStep = (e) => {
     if (e) e.preventDefault();
-    
+
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
@@ -157,27 +157,26 @@ const MultiForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold mb-10 text-white">
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
+      <div className="w-full max-w-4xl">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-white text-center">
           Create New Account
         </h1>
-        <div className="flex bg-gradient-to-r from-blue-50 to-purple-50">
+        
+        <div className="hidden md:flex rounded-t-3xl overflow-hidden bg-gradient-to-r from-blue-50 to-purple-50">
           {steps.map((step, index) => (
             <button
               key={step.number}
               type="button"
               onClick={() => goToStep(step.number)}
-              className={`flex-1 flex items-center justify-center gap-3 py-6 px-4 transition-all duration-300 ${
+              className={`flex-1 flex items-center justify-center gap-3 py-5 px-4 transition-all duration-300 ${
                 currentStep === step.number
                   ? "bg-gradient-to-r from-blue-400 to-purple-400 text-white shadow-lg"
-                  : "text-gray-400 hover:bg-white/50"
-              } ${index === 0 ? "rounded-tr-3xl" : ""} ${
-                index === steps.length - 1 ? "rounded-tl-3xl" : ""
+                  : "text-gray-600 hover:bg-white/50"
               }`}
             >
               <span
-                className={`flex items-center justify-center w-8 h-8 rounded-full font-semibold ${
+                className={`flex items-center justify-center w-8 h-8 text-sm rounded-full font-semibold ${
                   currentStep === step.number
                     ? "bg-white text-blue-500"
                     : "bg-gray-200 text-gray-500"
@@ -185,13 +184,48 @@ const MultiForm = () => {
               >
                 {step.number}
               </span>
-              <span className="font-medium hidden sm:inline">{step.title}</span>
+              <span className="font-medium text-sm lg:text-base">
+                {step.title}
+              </span>
             </button>
           ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white w-5xl shadow-lg p-8">
-          <div className="border border-none p-6 w-full h-96 overflow-y-auto">
+        <div className="md:hidden rounded-t-3xl overflow-hidden bg-gradient-to-r from-blue-50 to-purple-50">
+          <div className="grid grid-cols-4 gap-0">
+            {steps.map((step) => (
+              <button
+                key={step.number}
+                type="button"
+                onClick={() => goToStep(step.number)}
+                className={`flex flex-col items-center justify-center gap-2 py-4 px-2 transition-all duration-300 ${
+                  currentStep === step.number
+                    ? "bg-gradient-to-r from-blue-400 to-purple-400 text-white shadow-lg"
+                    : "text-gray-600 hover:bg-white/50"
+                }`}
+              >
+                <span
+                  className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 text-xs sm:text-sm rounded-full font-semibold ${
+                    currentStep === step.number
+                      ? "bg-white text-blue-500"
+                      : "bg-gray-200 text-gray-500"
+                  }`}
+                >
+                  {step.number}
+                </span>
+                <span className="font-medium text-[10px] sm:text-xs text-center leading-tight">
+                  {step.title}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white shadow-lg p-4 sm:p-6 md:p-8 rounded-b-3xl"
+        >
+          <div className="border-none p-2 sm:p-4 md:p-6 w-full h-64 sm:h-80 md:h-96 overflow-y-auto">
             {currentStep === 1 && (
               <PersonalFormDetails
                 formData={formData}
@@ -212,43 +246,45 @@ const MultiForm = () => {
             )}
             {currentStep === 4 && <FinalFormReview formData={formData} />}
           </div>
-          <div className="flex items-center justify-between mt-5">
+          
+          <div className="flex items-center justify-between mt-4 sm:mt-6 gap-3">
             {currentStep === 1 && (
-              <div className="flex items-center ">
-                <button
-                  type="button"
-                  className="flex items-center gap-1 text-blue-400 hover:text-blue-600 text-sm font-medium cursor-pointer"
-                >
-                  <ChevronLeft className="w-4 h-4 stroke-[1.5]" />
-                  Back to Login
-                </button>
-              </div>
+              <button
+                type="button"
+                className="flex items-center gap-1 sm:gap-2 text-blue-400 hover:text-blue-600 text-xs sm:text-sm font-medium cursor-pointer transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4 stroke-[2]" />
+                <span className="hidden sm:inline">Back to Login</span>
+                <span className="sm:hidden">Back</span>
+              </button>
             )}
+            
             {currentStep > 1 && (
               <button
                 type="button"
                 onClick={prevStep}
-                className="flex items-center px-4 py-2 bg-gray-400 text-white rounded-lg cursor-pointer"
+                className="flex items-center gap-1 px-4 sm:px-5 py-2 sm:py-2.5 bg-gray-400 hover:bg-gray-500 text-white rounded-lg cursor-pointer text-xs sm:text-sm font-medium transition-colors"
               >
-                <ChevronLeft className="w-4 h-4 stroke-[1.5]" />
-                Back
+                <ChevronLeft className="w-4 h-4 stroke-[2]" />
+                <span>Back</span>
               </button>
             )}
+            
             {currentStep < 4 ? (
               <button
                 type="button"
                 onClick={nextStep}
-                className="flex items-center px-6 py-2.5 bg-green-400 hover:bg-green-600 font-semibold text-white rounded-lg cursor-pointer"
+                className="flex items-center gap-1 px-4 sm:px-6 py-2 sm:py-2.5 bg-green-400 hover:bg-green-600 font-semibold text-white rounded-lg cursor-pointer text-xs sm:text-sm ml-auto transition-colors"
               >
-                Next
-                <ChevronRight className="w-4 h-4 stroke-[1.5]" />
+                <span>Next</span>
+                <ChevronRight className="w-4 h-4 stroke-[2]" />
               </button>
             ) : (
               <button
                 type="submit"
-                className="flex items-center px-6 py-2.5 bg-green-400 hover:bg-green-600 font-semibold text-white rounded-lg cursor-pointer"
+                className="flex items-center gap-1 px-4 sm:px-6 py-2 sm:py-2.5 bg-green-400 hover:bg-green-600 font-semibold text-white rounded-lg cursor-pointer text-xs sm:text-sm ml-auto transition-colors"
               >
-                Submit
+                <span>Submit</span>
               </button>
             )}
           </div>
