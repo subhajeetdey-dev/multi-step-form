@@ -163,6 +163,7 @@ const MultiForm = () => {
           Create New Account
         </h1>
         
+        {/* Steps Navigation - Desktop */}
         <div className="hidden md:flex rounded-t-3xl overflow-hidden bg-gradient-to-r from-blue-50 to-purple-50">
           {steps.map((step, index) => (
             <button
@@ -191,6 +192,7 @@ const MultiForm = () => {
           ))}
         </div>
 
+        {/* Steps Navigation - Mobile/Tablet */}
         <div className="md:hidden rounded-t-3xl overflow-hidden bg-gradient-to-r from-blue-50 to-purple-50">
           <div className="grid grid-cols-4 gap-0">
             {steps.map((step) => (

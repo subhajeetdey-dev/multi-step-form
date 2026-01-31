@@ -68,12 +68,7 @@ export default function SkillsFormDetails({ formData, handleChange }) {
                 e.preventDefault();
                 addSkills(e);
               }}
-<<<<<<< HEAD
-              className="px-3 sm:px-4 py-2 bg-blue-500 text-white rounded"
-=======
-              className="px-4 py-2 bg-blue-500 text-white rounded"
->>>>>>> 4f3c4f2bf8bdcec453477b72fbfb2b7ae9b0b519
-            >
+              className="px-3 sm:px-4 py-2 bg-blue-500 text-white rounded">
               <Plus strokeWidth={3} className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
@@ -111,13 +106,9 @@ export default function SkillsFormDetails({ formData, handleChange }) {
           name="experience"
           value={formData.experience}
           onChange={handleChange}
-<<<<<<< HEAD
           className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-xl 
           focus:ring-2 focus:ring-purple-400 focus:border-purple-400 
           outline-none transition-all text-sm sm:text-base"
-=======
-          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none transition-all"
->>>>>>> 4f3c4f2bf8bdcec453477b72fbfb2b7ae9b0b519
           placeholder="Enter your experience"
         />
       </div>
